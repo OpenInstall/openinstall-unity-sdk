@@ -1,3 +1,5 @@
+# openinstall-unity-sdk
+ 方便 unity 集成使用 openinstall
 
 ## 导入 openinstall.unitypackage
 右击 `Assets` ，选择 `Import Package` 中的 `Custom Package...`    
@@ -12,7 +14,7 @@
 
 无需写一句Object-C代码，只需进行如下配置  
 
-_备注（例外）：  
+_备注：  
 1、如果用户使用了 `IMPL_APP_CONTROLLER_SUBCLASS` 宏生成自己的 `customAppController`,请在自己的 `customAppController` 中添加初始化方法和拉起回调方法，并删除掉 `Assets/Plugins/iOS/libs` 中的 `CustomAppController.mm` 文件；  
 2、如果用户使用了 iOS9.0 新 API `application:openURL:options:`，请在新 API 中添加 `if ([OpenInstallSDK handLinkURL:url]) return YES;` 回调判断_
 
@@ -25,7 +27,7 @@ _备注（例外）：
 ```
 ##### universal links配置（iOS9以后推荐使用）
 
-对于iOS，为确保能正常跳转，AppID必须开启 Associated Domains 功能，请到 [苹果开发者平台](https://developer.apple.com)，选择 `Certificate, Identifiers & Profiles`，选择相应的 AppID，开启 Associated Domains。注意：当AppID重新编辑过之后，需要更新相应的 mobileprovision 证书。(详细步骤请看[openinstall官网](https://www.openinstall.io)后台文档，universal link从后台获取)
+对于iOS，为确保能正常跳转，AppID必须开启 Associated Domains 功能，请到 [苹果开发者平台](https://developer.apple.com)，选择 `Certificate, Identifiers & Profiles`，选择相应的 AppID，开启 Associated Domains。注意：当 AppID 重新编辑过之后，需要更新相应的 mobileprovision 证书。(详细步骤请看[openinstall官网](https://www.openinstall.io)后台文档，universal link需从后台获取)
 
 ##### scheme配置
 
@@ -48,7 +50,8 @@ _备注（例外）：
 ```
 
 #### Android 平台
-将 sample 目录中的 `AndroidManifest.xml` 文件拷贝到项目的 `Assets/Plugin/Android/` 目录下，并修改文件内容：将 openinstall 为应用分配的 `appkey` 和 `scheme` 替换至相应位置
+将 sample 目录中的 `AndroidManifest.xml` 文件拷贝到项目的 `Assets/Plugin/Android/` 目录下，并修改文件内容：将 openinstall 为应用分配的 `appkey` 和 `scheme` 替换至相应位置  
+_备注：如已存在 `AndroidManifest.xml`，请参考文件进行合并处理_
 
 ## 使用指南
 
