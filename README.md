@@ -71,7 +71,7 @@ void Start () {
 #### 获取拉起数据
 在 `Start` 方法中，获取到实例之后注册拉起回调，这样当 App 被拉起时，会回调方法，并可在回调中获取拉起数据
 ``` c
-openinstall.registerWakeupHandler(getWakeupFinish);
+openinstall.RegisterWakeupHandler(getWakeupFinish);
 ```
 ``` c
 public void getWakeupFinish(OpenInstallData wakeupData)
@@ -83,7 +83,7 @@ public void getWakeupFinish(OpenInstallData wakeupData)
 #### 获取安装数据
 在应用需要安装参数时，调用以下 api 获取由 SDK 保存的安装参数，可设置超时时长，单位秒
 ``` c
-openinstall.getInstall(8, getInstallFinish);
+openinstall.GetInstall(8, getInstallFinish);
 ```
 ``` c
 public void getInstallFinish(OpenInstallData installData)
@@ -97,10 +97,10 @@ SDK 会自动完成访问量、点击量、安装量、活跃量、留存率等�
 ##### 注册上报
 在用户注册成功后，调用接口上报注册量
 ``` c
-openinstall.reportRegister();
+openinstall.ReportRegister();
 ```
 ##### 效果点上报
 统计终端用户对某些特殊业务的使用效果，如充值金额，分享次数等等。调用接口前，请先进入 openinstall 管理后台 “效果点管理” 中添加效果点，第一个参数对应管理后台 效果点ID
 ``` c
-openinstall.reportEffectPoint("effect_test", 1);
+openinstall.ReportEffectPoint("effect_test", 1);
 ```
