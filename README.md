@@ -27,7 +27,12 @@ _备注：
 ```
 ##### universal links配置（iOS9以后推荐使用）
 
-对于iOS，为确保能正常跳转，AppID必须开启 Associated Domains 功能，请到 [苹果开发者平台](https://developer.apple.com)，选择 `Certificate, Identifiers & Profiles`，选择相应的 AppID，开启 Associated Domains。注意：当 AppID 重新编辑过之后，需要更新相应的 mobileprovision 证书。(详细步骤请看[openinstall官网](https://www.openinstall.io)后台文档，universal link需从后台获取)
+对于iOS，为确保能正常跳转，AppID必须开启Associated Domains功能，请到[苹果开发者网站](https://developer.apple.com)，选择Certificate, Identifiers & Profiles，选择相应的AppID，开启Associated Domains。注意：当AppID重新编辑过之后，需要更新相应的mobileprovision证书。(详细配置步骤请看[openinstall官网](https://www.openinstall.io)后台文档，universal link从后台获取)，如果已经开启过Associated Domains功能，进行下面操作：
+
+- 在左侧导航器中点击您的项目
+- 选择 `Capabilities` 标签
+- 打开 `Associated Domains` 开关
+- 添加 openinstall 官网后台中应用对应的关联域名（iOS集成->iOS应用配置->关联域名(Associated Domains)）
 
 ##### scheme配置
 
@@ -62,7 +67,6 @@ using io.openinstall.unity;
 然后通过 `GameObject` 获取 `OpenInstall` 实例
 ``` c
 private OpenInstall openinstall;
-// Use this for initialization
 void Start () {
     openinstall = GameObject.Find("OpenInstall").GetComponent<OpenInstall>();
 }
