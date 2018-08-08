@@ -10,7 +10,7 @@
 
 ## 平台配置
 
-#### iOS 平台
+### iOS 平台
 
 无需写一句Object-C代码，只需进行如下配置  
 
@@ -54,9 +54,18 @@ _备注：
 	</array>
 ```
 
-#### Android 平台
-将 sample 目录中的 `AndroidManifest.xml` 文件拷贝到项目的 `Assets/Plugin/Android/` 目录下，并修改文件内容：将 openinstall 为应用分配的 `appkey` 和 `scheme` 替换至相应位置  
-_备注：如已存在 `AndroidManifest.xml`，请参考文件进行合并处理_
+### Android 平台
+
+##### 简单配置
+将 `sample/Android` 目录中的 `AndroidManifest.xml` 文件拷贝到项目的 `Assets/Plugin/Android/` 目录下，并修改文件内容：**将 openinstall 为应用分配的 `appkey` 和 `scheme` 替换至相应位置**
+
+##### 自定义配置
+1. 如果项目已存在自己的 `AndroidManifest.xml` 文件，根据下图标注的内容做相应的更改
+![AndroidManifest.xml修改](images/AndroidManifest.png)  
+
+2. 如果拥有自己的 `Application` ，可参考 `sample/Android/src` 目录中的 `OiApplication.java` 修改自己的 `Application` 对 openinstall 进行初始化，此时 `AndroidManifest.xml` 中的 `application` 设置仍然使用自己的 `Application`
+
+3. 如果需要使用自己的拉起 `Activity` ，可参考 `sample/Android/src` 目录中的 `OiUnityActivity.java` 在拉起 `Activity` 的 `onCreate(Bundle savedInstanceState)` 和 `onNewIntent(Intent intent)` 中添加拉起处理代码
 
 ## 使用指南
 
