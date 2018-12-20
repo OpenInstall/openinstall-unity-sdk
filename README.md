@@ -9,7 +9,7 @@
 将 `Assets/Plugins/OpenInstall` 下的 `OpenInstall.prefab` 拖入对应的场景中使用 openinstall 实现业务逻辑
 
 ## 平台配置
-#### 请根据使用指南来做对应配置
+#### 请根据`使用指南`来做对应配置
 
 ### iOS 平台
 
@@ -71,10 +71,7 @@ _备注：
 3. 如果需要使用自己的拉起 `Activity` ，可参考 `sample/Android/src` 目录中的 `OiUnityActivity.java` 在拉起 `Activity` 的 `onCreate(Bundle savedInstanceState)` 和 `onNewIntent(Intent intent)` 中添加拉起处理代码
 
 ## 使用指南
-#### 1 快速下载
-如果只需要快速下载功能，无需其它功能（携带参数安装、渠道统计、一键拉起），完成初始化相关工作即可
-
-### 导入空间命令并获取实例
+### 除了`快速下载`功能，其他功能都需要先 `导入空间命令并获取实例`
 使用 `OpenInstall` 之前，请先导入命名空间
 ``` c
 using io.openinstall.unity;
@@ -86,6 +83,9 @@ void Start () {
     openinstall = GameObject.Find("OpenInstall").GetComponent<OpenInstall>();
 }
 ```
+
+#### 1 快速下载
+如果只需要快速下载功能，无需其它功能（携带参数安装、渠道统计、一键拉起），完成初始化相关工作即可
 
 #### 2 一键拉起
 ##### 完成文档前面iOS和Android介绍的一键拉起相关配置
@@ -117,7 +117,8 @@ public void getInstallFinish(OpenInstallData installData)
 }
 ```
 _备注：  
-- 注意这个安装参数不要自己保存，在每次需要调用的时候调用该方法去获取
+- 注意这个安装参数尽量不要自己保存，在每次需要用到的时候调用该方法去获取，因为如果获取成功sdk会保存在本地  
+- 该方法可重复获取参数，如需只要在首次安装时获取，可设置标记，详细说明可参考openinstall官网的常见问题
 
 #### 4 渠道统计（高级版功能）
 ##### SDK 会自动完成访问量、点击量、安装量、活跃量、留存率等统计工作。其它业务相关统计由开发人员代码埋点上报
