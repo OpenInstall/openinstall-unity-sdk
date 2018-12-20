@@ -9,14 +9,15 @@
 将 `Assets/Plugins/OpenInstall` 下的 `OpenInstall.prefab` 拖入对应的场景中使用 openinstall 实现业务逻辑
 
 ## 平台配置
+#### 请根据使用指南来做对应配置
 
 ### iOS 平台
 
 无需写一句Object-C代码，只需进行如下配置  
 
 _备注：  
-1、如果用户使用了 `IMPL_APP_CONTROLLER_SUBCLASS` 宏生成自己的 `customAppController`,请在自己的 `customAppController` 中添加初始化方法和拉起回调方法，并删除掉 `Assets/Plugins/iOS/libs` 中的 `CustomAppController.mm` 文件；  
-2、如果用户使用了 iOS9.0 新 API `application:openURL:options:`，请在新 API 中添加 `if ([OpenInstallSDK handLinkURL:url]) return YES;` 回调判断_
+- 如果用户使用了 `IMPL_APP_CONTROLLER_SUBCLASS` 宏生成自己的 `customAppController`,请在自己的 `customAppController` 中添加初始化方法和拉起回调方法，并删除掉 `Assets/Plugins/iOS/libs` 中的 `CustomAppController.mm` 文件；  
+- 如果用户使用了 iOS9.0 新 API `application:openURL:options:`，请在新 API 中添加 `if ([OpenInstallSDK handLinkURL:url]) return YES;` 回调判断_
 
 ##### 初始化配置
 
@@ -25,9 +26,11 @@ _备注：
 <key>com.openinstall.APP_KEY</key>
 <string>从openinstall官网后台获取应用的appkey</string>
 ```
+
+#### 以下为iOS一键拉起功能相关配置
 ##### universal links配置（iOS9以后推荐使用）
 
-对于iOS，为确保能正常跳转，AppID必须开启Associated Domains功能，请到[苹果开发者网站](https://developer.apple.com)，选择Certificate, Identifiers & Profiles，选择相应的AppID，开启Associated Domains。注意：当AppID重新编辑过之后，需要更新相应的mobileprovision证书。(详细配置步骤请看[openinstall官网](https://www.openinstall.io)后台文档，universal link从后台获取)，如果已经开启过Associated Domains功能，进行下面操作：
+对于iOS，为确保能正常跳转，AppID必须开启Associated Domains功能，请到[苹果开发者网站](https://developer.apple.com)，选择Certificate, Identifiers & Profiles，选择相应的AppID，开启Associated Domains。注意：当AppID重新编辑过之后，需要更新相应的mobileprovision证书。(详细配置步骤请看[openinstall官网](https://www.openinstall.io)后台文档，universal link从后台获取)，如果已经开启过Associated Domains功能，进行下面操作：  
 
 - 在左侧导航器中点击您的项目
 - 选择 `Capabilities` 标签
@@ -68,7 +71,10 @@ _备注：
 3. 如果需要使用自己的拉起 `Activity` ，可参考 `sample/Android/src` 目录中的 `OiUnityActivity.java` 在拉起 `Activity` 的 `onCreate(Bundle savedInstanceState)` 和 `onNewIntent(Intent intent)` 中添加拉起处理代码
 
 ## 使用指南
+#### 1 快速下载
+如果只需要快速下载功能，无需其它功能（携带参数安装、渠道统计、一键拉起），完成初始化相关工作即可
 
+### 导入空间命令并获取实例
 使用 `OpenInstall` 之前，请先导入命名空间
 ``` c
 using io.openinstall.unity;
@@ -81,7 +87,10 @@ void Start () {
 }
 ```
 
-#### 获取拉起数据
+#### 2 一键拉起
+##### 完成文档前面iOS和Android介绍的一键拉起相关配置
+
+##### 获取拉起数据
 在 `Start` 方法中，获取到实例之后注册拉起回调，这样当 App 被拉起时，会回调方法，并可在回调中获取拉起数据
 ``` c
 openinstall.RegisterWakeupHandler(getWakeupFinish);
@@ -93,10 +102,12 @@ public void getWakeupFinish(OpenInstallData wakeupData)
             + "， 自定义数据=" + wakeupData.bindData);
 }
 ```
-#### 获取安装数据
-在应用需要安装参数时，调用以下 api 获取由 SDK 保存的安装参数，可设置超时时长，单位秒
+
+#### 3 携带参数安装（高级版功能）
+##### 获取安装数据
+在应用需要安装参数时，调用以下 api 获取由 SDK 保存的安装参数，可设置超时时长（一般为8～15s），单位秒
 ``` c
-openinstall.GetInstall(8, getInstallFinish);
+openinstall.GetInstall(10, getInstallFinish);
 ```
 ``` c
 public void getInstallFinish(OpenInstallData installData)
@@ -105,14 +116,18 @@ public void getInstallFinish(OpenInstallData installData)
             + "，自定义数据=" + installData.bindData);
 }
 ```
-#### 渠道统计
-SDK 会自动完成访问量、点击量、安装量、活跃量、留存率等统计工作。其它业务相关统计由开发人员代码埋点上报
-##### 注册上报
+_备注：  
+- 注意这个安装参数不要自己保存，在每次需要调用的时候调用该方法去获取
+
+#### 4 渠道统计（高级版功能）
+##### SDK 会自动完成访问量、点击量、安装量、活跃量、留存率等统计工作。其它业务相关统计由开发人员代码埋点上报
+
+##### 4.1 注册上报
 在用户注册成功后，调用接口上报注册量
 ``` c
 openinstall.ReportRegister();
 ```
-##### 效果点上报
+##### 4.2 效果点上报
 统计终端用户对某些特殊业务的使用效果，如充值金额，分享次数等等。调用接口前，请先进入 openinstall 管理后台 “效果点管理” 中添加效果点，第一个参数对应管理后台 效果点ID
 ``` c
 openinstall.ReportEffectPoint("effect_test", 1);
