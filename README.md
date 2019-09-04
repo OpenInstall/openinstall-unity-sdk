@@ -22,7 +22,7 @@ _备注：
 ##### 初始化配置
 
 在 Info.plist 文件中配置 appKey 键值对，如下：
-``` plist
+``` xml
 <key>com.openinstall.APP_KEY</key>
 <string>从openinstall官网后台获取应用的appkey</string>
 ```
@@ -42,7 +42,7 @@ _备注：
 在 `Info.plist` 文件中，在 `CFBundleURLTypes` 数组中添加应用对应的 `scheme`，或者在工程“TARGETS-Info-URL Types”里快速添加，图文配置请看[iOS集成指南](https://www.openinstall.io/doc/ios_sdk.html)  
 （scheme的值详细获取位置：openinstall应用控制台->iOS集成->iOS应用配置）
 
-``` plist
+``` xml
 	<key>CFBundleURLTypes</key>
 	<array>
 	    <dict>
