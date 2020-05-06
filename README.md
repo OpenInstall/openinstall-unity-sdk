@@ -30,7 +30,7 @@ _备注：
 #### 以下为iOS一键拉起功能相关配置
 ##### universal links配置（iOS9以后推荐使用）
 
-对于iOS，为确保能正常跳转，AppID必须开启Associated Domains功能，请到[苹果开发者网站](https://developer.apple.com)，选择Certificate, Identifiers & Profiles，选择相应的AppID，开启Associated Domains。注意：当AppID重新编辑过之后，需要更新相应的mobileprovision证书。(图文配置步骤请看[iOS集成指南](https://www.openinstall.io/doc/ios_sdk.html))，如果已经开启过Associated Domains功能，进行下面操作：  
+对于iOS，为确保能正常跳转，AppID必须开启Associated Domains功能，请到[苹果开发者网站](https://developer.apple.com)，选择Certificate, Identifiers & Profiles，选择相应的AppID，开启Associated Domains。注意：当AppID重新编辑过之后，需要更新相应的mobileprovision证书。(图文配置步骤请看[Unity3d接入指南](https://www.openinstall.io/doc/unity3d_sdk.html))，如果已经开启过Associated Domains功能，进行下面操作：  
 
 - 在左侧导航器中点击您的项目
 - 选择 `Capabilities` 标签
@@ -39,7 +39,7 @@ _备注：
 
 ##### scheme配置
 
-在 `Info.plist` 文件中，在 `CFBundleURLTypes` 数组中添加应用对应的 `scheme`，或者在工程“TARGETS-Info-URL Types”里快速添加，图文配置请看[iOS集成指南](https://www.openinstall.io/doc/ios_sdk.html)  
+在 `Info.plist` 文件中，在 `CFBundleURLTypes` 数组中添加应用对应的 `scheme`，或者在工程“TARGETS-Info-URL Types”里快速添加，图文配置请看[Unity3d接入指南](https://www.openinstall.io/doc/unity3d_sdk.html)  
 （scheme的值详细获取位置：openinstall应用控制台->iOS集成->iOS应用配置）
 
 ``` xml
