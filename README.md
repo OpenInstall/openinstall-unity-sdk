@@ -17,7 +17,6 @@
 
 _备注：  
 - 如果用户使用了 `IMPL_APP_CONTROLLER_SUBCLASS` 宏生成自己的 `customAppController`,请在自己的 `customAppController` 中添加初始化方法和拉起回调方法，并删除掉 `Assets/Plugins/iOS/libs` 中的 `CustomAppController.mm` 文件；  
-- 如果用户使用了 iOS9.0 新 API `application:openURL:options:`，请在新 API 中添加 `if ([OpenInstallSDK handLinkURL:url]) return YES;` 回调判断_
 
 ##### 初始化配置
 
