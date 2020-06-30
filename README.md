@@ -36,6 +36,19 @@ _备注：
 - 打开 `Associated Domains` 开关
 - 添加 openinstall 官网后台中应用对应的关联域名（openinstall应用控制台->iOS集成->iOS应用配置->关联域名(Associated Domains)）
 
+**openinstall完全兼容微信openSDK1.8.6以上版本的通用链接跳转功能，注意微信SDK初始化方法中，传入正确格式的universal link链接：**  
+
+``` objc
+//your_wxAppID从微信后台获取，yourAppkey从openinstall后台获取
+[WXApi registerApp:@"your_wxAppID" universalLink:@"https://yourAppkey.openinstall.io/ulink/"];
+```
+
+微信开放平台后台Universal links配置，要和上面代码中的保持一致  
+
+![微信后台配置](res/wexinUL.jpg)
+
+- 微信SDK更新参考[微信开放平台更新文档](https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Access_Guide/iOS.html)  
+
 ##### scheme配置
 
 在 `Info.plist` 文件中，在 `CFBundleURLTypes` 数组中添加应用对应的 `scheme`，或者在工程“TARGETS-Info-URL Types”里快速添加，图文配置请看[Unity3d接入指南](https://www.openinstall.io/doc/unity3d_sdk.html)  
