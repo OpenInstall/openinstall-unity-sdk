@@ -12,9 +12,13 @@ public class OiUnityActivity extends UnityPlayerActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+//		setContentView(R.layout.activity_main);
+
 		OpenInstall.getWakeUp(getIntent(), wakeupCallback);
 	}
-	
+
+
+
 	@Override
 	protected void onNewIntent(Intent intent){
 		super.onNewIntent(intent);
