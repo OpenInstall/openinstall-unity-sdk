@@ -9,7 +9,10 @@
 #import "OpenInstallSDK.h"
 #import "OpenInstallUnity3DCallBack.h"
 #include "PluginBase/AppDelegateListener.h"
-#import <AdSupport/AdSupport.h>
+#import <AdSupport/AdSupport.h>//需要使用idfa时引入
+#if defined(__IPHONE_14_0)
+#import <AppTrackingTransparency/AppTrackingTransparency.h>//适配iOS14
+#endif
 
 @interface CustomAppController : UnityAppController<AppDelegateListener>
 
@@ -22,9 +25,18 @@ IMPL_APP_CONTROLLER_SUBCLASS(CustomAppController)
 
 -(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     
+#if defined(__IPHONE_14_0)
+    if (@available(iOS 14, *)) {
+        [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
+            NSString *idfaStr = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+            [OpenInstallSDK initWithDelegate:self advertisingId:idfaStr];//不管用户是否授权，都要初始化
+        }];
+    }
+#else
     NSString *idfaStr = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-    [OpenInstallSDK initWithDelegate:[OpenInstallUnity3DCallBack defaultManager] advertisingId:idfaStr];
-    
+    [OpenInstallSDK initWithDelegate:self advertisingId:idfaStr];
+#endif
+
     UnityRegisterAppDelegateListener(self);
     [super application:application didFinishLaunchingWithOptions:launchOptions];
     
