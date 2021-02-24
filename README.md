@@ -155,3 +155,19 @@ openinstall.ReportEffectPoint("effect_test", 1);
 下面是apk包的上传界面（后台截图）：  
 
 ![上传安装包](res/guide2.jpg)
+
+## 广告补充文档
+
+### iOS平台
+1、替换为集成了idfa的代码文件：  
+
+在完成导入openinstall.unitypackage包后，将 `Assets/Plugins/iOS/libs` 目录下的 `CustomAppController.mm` 文件，替换为 `sample/iOS/ad-track/` 目录下的 `CustomAppController.mm` 文件  
+
+2、参考官网文档，配置plist：  
+
+参考[iOS集成指南](https://www.openinstall.io/doc/ad_ios.html)，开启后台开关，并配置Info.plist文件，添加IDFA的权限申请描述，详细如下：  
+
+```xml
+<key>NSUserTrackingUsageDescription</key>
+<string>通过后可用于广告的追踪定位</string>
+```
