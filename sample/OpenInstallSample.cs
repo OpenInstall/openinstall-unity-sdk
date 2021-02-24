@@ -11,20 +11,22 @@ public class OpenInstallSample : MonoBehaviour {
     public Text wakeupResult;
 
     // Use this for initialization
-    void Start()
-    {
+    void Start () {
+		Debug.Log("OpenInstall Sample Start");
         openinstall = GameObject.Find("OpenInstall").GetComponent<OpenInstall>();
-        openinstall.RegisterWakeupHandler(getWakeupFinish);
-
-        installResult = GameObject.Find("InstallText").GetComponent<Text>();
-        wakeupResult = GameObject.Find("WakeupText").GetComponent<Text>();
+		// 在初始化前，需要用户阅读并同意《隐私政策》
+        openinstall.Init(false);
+		
+        openinstall.RegisterWakeupHandler(getWakeupFinish);        
+        wakeupResult = GameObject.Find("wakeupResult").GetComponent<Text>();
+        installResult = GameObject.Find("installResult").GetComponent<Text>();
     }
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public void getInstallButtonClick()
     {
@@ -53,8 +55,9 @@ public class OpenInstallSample : MonoBehaviour {
 
     public void getWakeupFinish(OpenInstallData wakeupData)
     {
-        Debug.Log("OpenInstallSample getWakeupFinish : 渠道编号=" +wakeupData.channelCode + "， 自定义数据=" + wakeupData.bindData);
+        Debug.Log("OpenInstallSample getWakeupFinish : 渠道编号=" + wakeupData.channelCode + "， 自定义数据=" + wakeupData.bindData);
         wakeupResult.text = "拉起参数：" + JsonUtility.ToJson(wakeupData);
     }
+	
 
 }
