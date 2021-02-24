@@ -83,7 +83,7 @@ _备注_：
 2. 如果需要使用自己的拉起 `Activity` ，可参考 `sample/Android/src` 目录中的 `OiUnityActivity.java` 在拉起 `Activity` 的 `onCreate(Bundle savedInstanceState)` 和 `onNewIntent(Intent intent)` 中添加拉起处理代码
 
 ## 使用指南
-### 除了`快速下载`功能，其他功能都需要先 `导入空间命令并获取实例`
+### 导入命令空间并获取实例
 使用 `OpenInstall` 之前，请先导入命名空间
 ``` c
 using io.openinstall.unity;
@@ -95,15 +95,15 @@ void Start () {
     openinstall = GameObject.Find("OpenInstall").GetComponent<OpenInstall>();
 }
 ```
-
-#### 1 快速下载
-如果只需要快速下载功能，无需其它功能（携带参数安装、渠道统计、一键拉起），完成初始化相关工作即可
-
-#### 2 初始化
+#### 1 初始化
 确保用户同意《隐私政策》之后，再初始化 openinstall。参考 [应用合规指南](https://www.openinstall.io/doc/rules.html)
 ```
 openinstall.Init(false);
 ```
+
+#### 2 快速下载
+如果只需要快速下载功能，无需其它功能（携带参数安装、渠道统计、一键拉起），完成初始化相关工作即可
+
 
 #### 3 一键拉起
 ##### 完成文档前面iOS和Android介绍的一键拉起相关配置
@@ -161,7 +161,31 @@ openinstall.ReportEffectPoint("effect_test", 1);
 ![上传安装包](res/guide2.jpg)
 
 ## 广告补充文档
-
+### Android 平台
+1、针对广告平台接入，新增配置接口，在调用 init 之前调用。参考 [广告平台对接Android集成指引](https://www.openinstall.io/doc/ad_android.html)
+``` js
+    /**
+    * adEnabled 为 true 表示 openinstall 需要获取广告追踪相关参数，默认为 false
+    * oaid 为 null 时，表示交由 openinstall 获取 oaid， 默认为 null
+    * gaid 为 null 时，表示交由 openinstall 获取 gaid， 默认为 null
+    */
+    openinstall.Config(true, "通过移动安全联盟获取到的 oaid", "通过 google api 获取到的 advertisingId");
+```
+例如： 开发者自己获取到了 oaid，但是需要 openinstall 获取 gaid，则调用代码为
+``` js
+    // f32a09dc-3312-d43e-6583-62fac13f33ae 是通过移动安全联盟获取到的 oaid
+    openinstall.Config(true, "f32a09dc-3312-d43e-6583-62fac13f33ae", null);
+```
+2、为了精准地匹配到渠道，需要获取设备唯一标识码（IMEI），因此需要做额外的权限申请
+在 AndroidManifest.xml 中添加权限声明 <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+3、允许插件申请权限并初始化
+``` js
+    /**
+    * 调用初始化，允许 openinstall 请求权限
+    * permission 为 true，表示允许 openinstall 申请权限，以便获取 imei
+    */
+    openinstall.Init(true);
+```
 ### iOS平台
 1、替换为集成了idfa的代码文件：  
 
