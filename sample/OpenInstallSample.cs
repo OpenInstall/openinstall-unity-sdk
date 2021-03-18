@@ -14,6 +14,15 @@ public class OpenInstallSample : MonoBehaviour {
     void Start () {
 		Debug.Log("OpenInstall Sample Start");
         openinstall = GameObject.Find("OpenInstall").GetComponent<OpenInstall>();
+		/*
+		// 广告平台接入时开启配置
+		OpenInstallParam param = new OpenInstallParam();
+		param.adEnabled = true;
+		param.oaid = "获取的oaid值";
+		param.gaid = "获取的gaid值";
+		param.idfa = "获取的idfa值"
+		openinstall.Config(param);
+		*/
 		// 在初始化前，需要用户阅读并同意《隐私政策》
         openinstall.Init(false);
 		

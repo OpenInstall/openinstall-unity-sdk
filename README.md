@@ -164,20 +164,21 @@ openinstall.ReportEffectPoint("effect_test", 1);
 ### Android 平台
 1、针对广告平台接入，新增配置接口，在调用 init 之前调用。参考 [广告平台对接Android集成指引](https://www.openinstall.io/doc/ad_android.html)
 ``` js
-    /**
-    * adEnabled 为 true 表示 openinstall 需要获取广告追踪相关参数，默认为 false
-    * oaid 为 null 时，表示交由 openinstall 获取 oaid， 默认为 null
-    * gaid 为 null 时，表示交由 openinstall 获取 gaid， 默认为 null
-    */
-    openinstall.Config(true, "通过移动安全联盟获取到的 oaid", "通过 google api 获取到的 advertisingId");
+    OpenInstallParam param = new OpenInstallParam();
+    // adEnabled 为 true 表示 openinstall 需要获取广告追踪相关参数，默认为 false
+    param.adEnabled = true;
+    // oaid 为 null 时，表示交由 openinstall 获取 oaid， 默认为 null
+    param.oaid = "通过移动安全联盟获取到的 oaid";
+    // gaid 为 null 时，表示交由 openinstall 获取 gaid， 默认为 null
+    param.gaid = "通过 google api 获取到的 advertisingId";
+    openinstall.Config(param);
 ```
-例如： 开发者自己获取到了 oaid，但是需要 openinstall 获取 gaid，则调用代码为
-``` js
-    // f32a09dc-3312-d43e-6583-62fac13f33ae 是通过移动安全联盟获取到的 oaid
-    openinstall.Config(true, "f32a09dc-3312-d43e-6583-62fac13f33ae", null);
+
+2、为了精准地匹配到渠道，需要获取设备唯一标识码（IMEI），因此需要做额外的权限申请  
+在 AndroidManifest.xml 中添加权限声明 
+``` xml
+<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 ```
-2、为了精准地匹配到渠道，需要获取设备唯一标识码（IMEI），因此需要做额外的权限申请
-在 AndroidManifest.xml 中添加权限声明 <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 3、允许插件申请权限并初始化
 ``` js
     /**
@@ -187,9 +188,17 @@ openinstall.ReportEffectPoint("effect_test", 1);
     openinstall.Init(true);
 ```
 ### iOS平台
+方式一：Unity层传入idfa等参数  
+针对广告平台接入，新增配置 Config 接口，在调用 Init 之前调用:    
+``` js
+    OpenInstallParam param = new OpenInstallParam();
+	param.idfa = "获取的idfa值";
+    openinstall.Config(param);
+```
+方式二：直接原生层修改  
 1、替换为集成了idfa的代码文件：  
 
-在完成导入openinstall.unitypackage包后，将 `Assets/Plugins/iOS/libs` 目录下的 `CustomAppController.mm` 文件，替换为 `sample/iOS/ad-track/` 目录下的 `CustomAppController.mm` 文件  
+在完成导入openinstall.unitypackage包后，将 `Assets/Plugins/iOS/libs` 目录下的 `OpenIsntallUnity3DBridge.m` 文件，替换为 `sample/iOS/ad-track/` 目录下的 `OpenIsntallUnity3DBridge.m` 文件  
 
 2、参考官网文档，配置plist：  
 
