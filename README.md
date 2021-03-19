@@ -16,7 +16,7 @@
 无需写一句Object-C代码，只需进行如下配置  
 
 _备注_：  
-- 如果用户使用了 `IMPL_APP_CONTROLLER_SUBCLASS` 宏生成自己的 `customAppController`,请在自己的 `customAppController` 中添加初始化方法和拉起回调方法，并删除掉 `Assets/Plugins/iOS/libs` 中的 `CustomAppController.mm` 文件；  
+- 如果用户使用了 `IMPL_APP_CONTROLLER_SUBCLASS` 宏生成自己的 `customAppController`文件（或其它自定义名称）,请在该文件中添加一键跳转的回调方法，并删除掉 `Assets/Plugins/iOS/libs` 中的 `CustomAppController.mm` 文件；  
 
 ##### 初始化配置
 
