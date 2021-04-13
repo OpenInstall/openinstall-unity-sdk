@@ -35,6 +35,10 @@ extern "C" {
             [OpenInstallSDK initWithDelegate:[OpenInstallUnity3DCallBack defaultManager] advertisingId:idfaStr];//不管用户是否授权，都要初始化
             [OpenIsntallUnity3DBridge fitWakeupBehaviour];
         }];
+    }else{
+        NSString *idfaStr = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+        [OpenInstallSDK initWithDelegate:[OpenInstallUnity3DCallBack defaultManager] advertisingId:idfaStr];
+        [OpenIsntallUnity3DBridge fitWakeupBehaviour];
     }
 #else
     NSString *idfaStr = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
