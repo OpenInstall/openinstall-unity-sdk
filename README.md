@@ -189,23 +189,30 @@ openinstall.ReportEffectPoint("effect_test", 1);
     openinstall.Init(true);
 ```
 ### iOS平台
-方式一：Unity层传入idfa等参数  
-针对广告平台接入，新增配置 Config 接口，在调用 Init 之前调用:    
+#### 分为广告平台渠道统计和ASA渠道统计
+
+1、UnityFramework中需导入相关的库文件，IDFA库文件为`AdSupport.framework`，ASA库文件为`AdServices.framework`
+
+2、针对广告平台接入，新增配置 Config 接口，在调用 Init 之前调用（Unity层传入idfa，ASA等相关参数  ）:    
 ``` js
     OpenInstallParam param = new OpenInstallParam();
 	param.idfa = "获取的idfa值";
+    param.ASAEnabled = true;//开启ASA渠道统计
     openinstall.Config(param);
 ```
-方式二：直接原生层修改  
-1、替换为集成了idfa的代码文件：  
 
-在完成导入openinstall.unitypackage包后，将 `Assets/Plugins/iOS/libs` 目录下的 `OpenIsntallUnity3DBridge.m` 文件，替换为 `sample/iOS/ad-track/` 目录下的 `OpenIsntallUnity3DBridge.m` 文件  
+3、**如果需要使用广告平台渠道统计功能**，参考官网文档，配置plist：  
 
-2、参考官网文档，配置plist：  
-
-参考[iOS集成指南](https://www.openinstall.io/doc/ad_ios.html)，开启后台开关，并配置Info.plist文件，添加IDFA的权限申请描述，详细如下：  
+参考[广告平台渠道 iOS集成指南](https://www.openinstall.io/doc/ad_ios.html)，开启后台开关，并配置Info.plist文件，添加IDFA的权限申请描述，详细如下：  
 
 ```xml
 <key>NSUserTrackingUsageDescription</key>
-<string>通过后可用于广告的追踪定位</string>
+<string>通过后可用于广告的追踪定位（文案自定）</string>
 ```
+
+
+4、**如果需要使用ASA渠道统计功能**，则需要替换为集成了ASA的代码文件：
+
+在完成导入openinstall.unitypackage包后，将 `Assets/Plugins/iOS/libs` 目录下的 `OpenIsntallUnity3DBridge.m` 文件，替换为 `sample/iOS/ad-track/` 目录下的 `OpenIsntallUnity3DBridge.m` 文件  
+
+ASA渠道统计其它配置可参考 [ASA渠道 iOS集成指南](https://www.openinstall.io/doc/asa.html)

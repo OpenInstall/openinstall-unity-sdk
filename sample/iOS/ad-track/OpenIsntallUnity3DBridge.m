@@ -9,52 +9,46 @@
 #import "OpenInstallUnity3DCallBack.h"
 #import "OpenInstallSDK.h"
 #import <AdSupport/AdSupport.h>
-#if defined(__IPHONE_14_0)
 #import <AppTrackingTransparency/AppTrackingTransparency.h>//适配iOS14
-#endif
+#import <AdServices/AAAttribution.h>
+
 @implementation OpenIsntallUnity3DBridge
 
 #if defined (__cplusplus)
 extern "C" {
 #endif
     
-    void _config(char*adid)
+    void _config(char*adid,BOOL asaEnabled)
     {
         NSString *adidStr = [NSString stringWithCString:adid encoding:NSASCIIStringEncoding];
-        [OpenInstallSDK initWithDelegate:[OpenInstallUnity3DCallBack defaultManager] advertisingId:adidStr];
+        if (!asaEnabled) {
+            [OpenInstallSDK initWithDelegate:[OpenInstallUnity3DCallBack defaultManager] advertisingId:adidStr];
+        }else{
+            NSMutableDictionary *config = [[NSMutableDictionary alloc]init];
+            if (@available(iOS 14.3, *)) {
+                NSError *error;
+                NSString *token = [AAAttribution attributionTokenWithError:&error];
+                [config setValue:token forKey:OP_ASA_Token];
+            }
+            [config setValue:adidStr forKey:OP_Idfa_Id];
+            [OpenInstallSDK initWithDelegate:[OpenInstallUnity3DCallBack defaultManager] adsAttribution:config];
+        }
     }
-    
+
     void _init()
     {
         if (![OpenInstallUnity3DCallBack defaultManager].isInit) {
             [OpenInstallUnity3DCallBack defaultManager].isInit = YES;
-#if defined(__IPHONE_14_0)
-    if (@available(iOS 14, *)) {
-        [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
-            NSString *idfaStr = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-            [OpenInstallSDK initWithDelegate:[OpenInstallUnity3DCallBack defaultManager] advertisingId:idfaStr];//不管用户是否授权，都要初始化
+            [OpenInstallSDK initWithDelegate:[OpenInstallUnity3DCallBack defaultManager]];
             [OpenIsntallUnity3DBridge fitWakeupBehaviour];
-        }];
-    }else{
-        NSString *idfaStr = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-        [OpenInstallSDK initWithDelegate:[OpenInstallUnity3DCallBack defaultManager] advertisingId:idfaStr];
-        [OpenIsntallUnity3DBridge fitWakeupBehaviour];
-    }
-#else
-    NSString *idfaStr = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-    [OpenInstallSDK initWithDelegate:[OpenInstallUnity3DCallBack defaultManager] advertisingId:idfaStr];
-    [OpenIsntallUnity3DBridge fitWakeupBehaviour];
-#endif
-            
-            
         }
     }
     
     void _openInstallGetInstall(int s)
     {
         _init();
-        float time = 8;
-        if (s >= 5){
+        float time = 12;
+        if (s >= 8){
             time = s;
         }
         [[OpenInstallSDK defaultManager] getInstallParmsWithTimeoutInterval:time completed:^(OpeninstallData * _Nullable appData) {
@@ -102,6 +96,7 @@ extern "C" {
 #if defined (__cplusplus)
 }
 #endif
+
 
 + (void)fitWakeupBehaviour{
     if ([OpenInstallUnity3DCallBack defaultManager].userActivity) {
