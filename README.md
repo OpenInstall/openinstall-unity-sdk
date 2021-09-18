@@ -29,26 +29,10 @@ _备注_：
 #### 以下为iOS一键拉起功能相关配置
 ##### universal links配置（iOS9以后推荐使用）
 
-对于iOS，为确保能正常跳转，AppID必须开启Associated Domains功能，请到[苹果开发者网站](https://developer.apple.com)，选择Certificate, Identifiers & Profiles，选择相应的AppID，开启Associated Domains。注意：当AppID重新编辑过之后，需要更新相应的mobileprovision证书。(图文配置步骤请看[Unity3d接入指南](https://www.openinstall.io/doc/unity3d_sdk.html))，如果已经开启过Associated Domains功能，进行下面操作：  
+对于iOS，为确保能正常跳转，AppID必须开启Associated Domains功能，请到[苹果开发者网站](https://developer.apple.com)，选择Certificate, Identifiers & Profiles，选择相应的AppID，开启Associated Domains。注意：当AppID重新编辑过之后，需要更新相应的mobileprovision证书，如果已经开启过Associated Domains功能，进行下面操作：  
+（openinstall应用控制台->iOS集成->iOS应用配置->关联域名(Associated Domains)）
 
-- 在左侧导航器中点击您的项目
-- 选择 `Capabilities` 标签
-- 打开 `Associated Domains` 开关
-- 添加 openinstall 官网后台中应用对应的关联域名（openinstall应用控制台->iOS集成->iOS应用配置->关联域名(Associated Domains)）
-
-**以下配置为可选项**  
-openinstall可兼容微信openSDK1.8.6以上版本的通用链接跳转功能，注意微信SDK初始化方法中，传入正确格式的universal link链接：  
-
-``` objc
-//your_wxAppID从微信后台获取，yourAppkey从openinstall后台获取
-[WXApi registerApp:@"your_wxAppID" universalLink:@"https://yourAppkey.openinstall.io/ulink/"];
-```
-
-微信开放平台后台Universal links配置，要和上面代码中的保持一致  
-
-![微信后台配置](res/wexinUL.jpg)
-
-- 微信SDK更新参考[微信开放平台更新文档](https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Access_Guide/iOS.html)  
+![开启Associated Domains](https://res.cdn.openinstall.io/doc/ios-ulink-1.png)
 
 ##### scheme配置
 
