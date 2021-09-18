@@ -21,9 +21,4 @@ public class OiUnityActivity extends UnityPlayerActivity {
         OpenInstallHelper.getWakeUp(intent);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        OpenInstall.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
 }
