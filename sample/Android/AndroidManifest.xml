@@ -17,6 +17,7 @@
         android:theme="@style/UnityThemeSelector" >
         <activity
             android:name="io.openinstall.unity.OiUnityActivity"
+            android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" 
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|layoutDirection|fontScale"
@@ -38,6 +39,7 @@
         
         <meta-data android:name="com.openinstall.APP_KEY"
             android:value="openinstall分配的appkey"/>
+			
     </application>
 
 </manifest>

@@ -90,7 +90,7 @@ openinstall可兼容微信openSDK1.8.6以上版本的通用链接跳转功能，
 
 #### 自定义配置
 - 如果项目已存在自己的 `AndroidManifest.xml` 文件，根据下图标注的内容做相应的更改  
-![修改AndroidManifest](https://res.cdn.openinstall.io/doc/unity-manifest.jpg)
+![修改AndroidManifest](https://res.cdn.openinstall.io/doc/unity-manifest.png)
 
 - 如果需要使用自己的拉起 `Activity` ，可参考 `sample/Android/src` 目录中的 `OiUnityActivity.java` 在拉起 `Activity` 的 `onCreate(Bundle savedInstanceState)` 和 `onNewIntent(Intent intent)` 中添加拉起处理代码
 
