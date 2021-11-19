@@ -61,7 +61,7 @@ openinstall可兼容微信openSDK1.8.6以上版本的通用链接跳转功能，
 ![微信后台配置](https://res.cdn.openinstall.io/doc/ios-wx-ulink.jpg)
 
 - 微信SDK更新参考[微信开放平台更新文档](https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Access_Guide/iOS.html)  
->>>>>>> 1d8827f936cbdeece21fae8edc34fe80e54ba358
+
 
 #### scheme 配置
 
