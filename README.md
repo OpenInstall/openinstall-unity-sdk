@@ -23,7 +23,7 @@
 无需写一句Object-C代码，只需进行如下配置  
 
 _备注_：  
-- 如果用户使用了 `IMPL_APP_CONTROLLER_SUBCLASS` 宏生成自己的 `customAppController`文件（或其它自定义名称）,请在该文件中添加一键跳转的回调方法，并删除掉 `Assets/Plugins/iOS/libs` 中的 `CustomAppController.mm` 文件；  
+- 如果用户使用了 `IMPL_APP_CONTROLLER_SUBCLASS` 宏生成自己的 `customAppController`文件（或其它自定义名称）,请在该文件中添加一键拉起的回调方法，并删除掉 `Assets/Plugins/iOS/libs` 中的 `CustomAppController.mm` 文件；  
 
 #### 初始化配置
 
@@ -114,7 +114,7 @@ openinstall.Init();
 ```
 > **注意：** `openinstall.Init(permission);` 接口已移除，请使用新的初始化接口
 
-### 2 快速安装和一键跳转
+### 2 快速安装和一键拉起
 
 完成文档前面iOS和Android介绍的一键拉起相关配置
 
@@ -185,7 +185,7 @@ OpenInstallParam 中Android相关字段说明如下：
 
 | 参数名| 参数类型 | 描述 |  
 | --- | --- | --- |
-| adEnabled| bool | 是否需要 SDK 获取广告追踪相关参数 |
+| adEnabled| bool | 广告平台接入开关（必须） |
 | macDisabled | bool | 是否禁止 SDK 获取 mac 地址 |
 | imeiDisabled | bool | 是否禁止 SDK 获取 imei |
 | gaid | string | 通过 google api 获取到的 advertisingId，SDK 将不再获取gaid |
