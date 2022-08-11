@@ -47,8 +47,8 @@ extern "C" {
     void _openInstallGetInstall(int s)
     {
         _init();
-        float time = 12;
-        if (s >= 8){
+        float time = 15;
+        if (s >= 15){
             time = s;
         }
         [[OpenInstallSDK defaultManager] getInstallParmsWithTimeoutInterval:time completed:^(OpeninstallData * _Nullable appData) {
