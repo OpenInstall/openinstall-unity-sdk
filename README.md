@@ -165,6 +165,16 @@ openinstall.ReportRegister();
 openinstall.ReportEffectPoint("effect_test", 1);
 ```
 
+#### 4.3 效果点明细统计
+请在 [openinstall 控制台](https://developer.openinstall.io/) 的 “效果点管理” 中添加对应的效果点  
+![创建效果点](https://res.cdn.openinstall.io/doc/effect_point.png)，并启用“记录明细”，添加自定义参数  
+``` c#
+Dictionary<string,string> extraDict = new Dictionary<string, string>();
+extraDict.Add("k1", "v1");
+extraDict.Add("k2", "v2");
+openinstall.ReportEffectPoint("effect_detail", 1, extraDict);
+```
+
 ## 导出apk/ipa包并上传
 
 代码集成完毕后，需要导出安装包上传openinstall后台，openinstall会自动完成所有的应用配置工作。  
