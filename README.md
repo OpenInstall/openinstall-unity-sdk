@@ -166,9 +166,8 @@ openinstall.ReportEffectPoint("effect_test", 1);
 ```
 
 #### 4.3 效果点明细统计
-请在 [openinstall 控制台](https://developer.openinstall.io/) 的 “效果点管理” 中添加对应的效果点  
-![创建效果点](https://res.cdn.openinstall.io/doc/effect_point.png)，并启用“记录明细”，添加自定义参数  
-``` c#
+请在 [openinstall 控制台](https://developer.openinstall.io/) 的 “效果点管理” 中添加对应的效果点，并启用“记录明细”，添加自定义参数  
+``` c
 Dictionary<string,string> extraDict = new Dictionary<string, string>();
 extraDict.Add("k1", "v1");
 extraDict.Add("k2", "v2");
