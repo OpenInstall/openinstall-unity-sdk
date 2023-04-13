@@ -140,7 +140,8 @@ openinstall.GetInstall(10, getInstallFinish);
 public void getInstallFinish(OpenInstallData installData)
 {
     Debug.Log("OpenInstallUnity getInstallFinish : 渠道编号=" + installData.channelCode 
-            + "，自定义数据=" + installData.bindData);
+            + "，自定义数据=" + installData.bindData
+			+ "，是否需要重试=" + installData.shouldRetry);
 }
 ```
 _备注_：  
@@ -172,6 +173,19 @@ Dictionary<string,string> extraDict = new Dictionary<string, string>();
 extraDict.Add("k1", "v1");
 extraDict.Add("k2", "v2");
 openinstall.ReportEffectPoint("effect_detail", 1, extraDict);
+```
+
+### 5 裂变分享（高级版功能）
+分享上报主要是统计某个具体用户在某次分享中，分享给了哪个平台，再通过JS端绑定被分享的用户信息，进一步统计到被分享用户的激活回流等情况。
+``` c
+openinstall.ReportShare("123456", "QQ", reportFinish);
+```
+可根据返回的数据中的`shouldRetry`决定是否需要重试，以及`message`查看失败的原因
+``` c
+public void reportFinish(OpenInstallData installData)
+{
+	Debug.Log("OpenInstallUnity reportFinish : shouldRetry=" + installData.shouldRetry);
+}
 ```
 
 ## 导出apk/ipa包并上传

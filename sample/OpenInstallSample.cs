@@ -48,6 +48,12 @@ public class OpenInstallSample : MonoBehaviour {
         openinstall.ReportEffectPoint("effect_test", 1);
     }
 
+    public void reportShareButtonClick()
+    {
+        Debug.Log("OpenInstallSample reportShare button click");
+        openinstall.ReportShare("123456", "QQ", reportFinish);
+    }
+
     // callback
     public void getInstallFinish(OpenInstallData installData)
     {
@@ -61,5 +67,9 @@ public class OpenInstallSample : MonoBehaviour {
         wakeupResult.text = "拉起参数：" + JsonUtility.ToJson(wakeupData);
     }
 	
+    public void reportFinish(OpenInstallData reportData)
+    {
+        Debug.Log("OpenInstallSample reportFinish : shouldRetry=" + reportData.shouldRetry);
+    }
 
 }
