@@ -18,7 +18,7 @@
 extern "C" {
 #endif
     
-    void _config(char*adid,BOOL asaEnabled)
+    void _config(char*adid,BOOL asaEnabled,BOOL asaDebug)
     {
         NSString *adidStr = [NSString stringWithCString:adid encoding:NSASCIIStringEncoding];
         if (!asaEnabled) {
@@ -29,6 +29,9 @@ extern "C" {
                 NSError *error;
                 NSString *token = [AAAttribution attributionTokenWithError:&error];
                 [config setValue:token forKey:OP_ASA_Token];
+                if (asaDebug){
+                    [config setValue:token forKey:OP_ASA_isDev];
+                }
             }
             [config setValue:adidStr forKey:OP_Idfa_Id];
             [OpenInstallSDK initWithDelegate:[OpenInstallUnity3DCallBack defaultManager] adsAttribution:config];
@@ -61,7 +64,11 @@ extern "C" {
             if (appData.channelCode) {
                 channelID = appData.channelCode;
             }
-            NSDictionary *installDicResult = @{@"channelCode":channelID,@"bindData":datas};
+            BOOL shouldRetry = NO;
+            if (appData.opCode==OPCode_timeout){
+                shouldRetry = YES;
+            }
+            NSDictionary *installDicResult = @{@"channelCode":channelID,@"bindData":datas,@"shouldRetry":@(shouldRetry)};
             NSString *installJsonStr = [OpenIsntallUnity3DBridge jsonStringWithObject:installDicResult];
             UnitySendMessage([@"OpenInstall" UTF8String], "_installCallback", [installJsonStr UTF8String]);
             
@@ -91,6 +98,32 @@ extern "C" {
         _init();
         NSString *pointID = [NSString stringWithCString:pointId encoding:NSASCIIStringEncoding];
         [[OpenInstallSDK defaultManager] reportEffectPoint:pointID effectValue:pointValue];
+    }
+    
+    void _openInstallReportEffectPointWithDictionary(char*pointId,long pointValue,char*json)
+    {
+        _init();
+        NSString *pointID = [NSString stringWithCString:pointId encoding:NSUTF8StringEncoding];
+        NSString *jsonStr = [NSString stringWithCString:json encoding:NSUTF8StringEncoding];
+        NSDictionary *dic = [OpenIsntallUnity3DBridge JsonToDictionary:jsonStr];
+        [[OpenInstallSDK defaultManager] reportEffectPoint:pointID effectValue:pointValue effectDictionary:dic];
+    }
+    
+    void _openInstallReportShare(char*shareCode,char*sharePlatform)
+    {
+        _init();
+        NSString *shareCodeStr = [NSString stringWithCString:shareCode encoding:NSUTF8StringEncoding];
+        NSString *platform = [NSString stringWithCString:sharePlatform encoding:NSUTF8StringEncoding];
+        [[OpenInstallSDK defaultManager] reportShareParametersWithShareCode:shareCodeStr sharePlatform:platform completed:^(NSInteger code, NSString * _Nullable msg) {
+            BOOL shouldRetry = NO;
+            if(code == -1){
+                shouldRetry = YES;
+            }
+            NSNumber *retry = @(shouldRetry);
+            NSDictionary *dic = @{@"shouldRetry":retry,@"message":msg};
+            NSString *shareStr = [OpenIsntallUnity3DBridge jsonStringWithObject:dic];
+            UnitySendMessage([@"OpenInstall" UTF8String], "_reportCallback", [shareStr UTF8String]);
+        }];
     }
     
 #if defined (__cplusplus)
@@ -136,5 +169,21 @@ extern "C" {
         return @"";
     }
 }
++ (NSDictionary *)JsonToDictionary:(NSString *)jsonString{
+    if (jsonString == nil) {
+            return nil;
+        }
 
+        NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *err;
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                            options:NSJSONReadingMutableContainers
+                                                              error:&err];
+        if(err)
+        {
+            NSLog(@"openinstall:------JsonToDictionary fail------");
+            return nil;
+        }
+        return dic;
+}
 @end

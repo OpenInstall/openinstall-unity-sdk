@@ -182,9 +182,9 @@ openinstall.ReportShare("123456", "QQ", reportFinish);
 ```
 可根据返回的数据中的`shouldRetry`决定是否需要重试，以及`message`查看失败的原因
 ``` c
-public void reportFinish(OpenInstallData installData)
+public void reportFinish(OpenInstallData shareData)
 {
-	Debug.Log("OpenInstallUnity reportFinish : shouldRetry=" + installData.shouldRetry);
+	Debug.Log("OpenInstallUnity reportFinish : shouldRetry=" + shareData.shouldRetry);
 }
 ```
 
@@ -233,6 +233,7 @@ OpenInstallParam 中Android相关字段说明如下：
     OpenInstallParam param = new OpenInstallParam();
 	param.idfa = "获取的idfa值";
     param.ASAEnabled = true;//开启ASA渠道统计
+    //config.ASADebug = false;//测试ASA渠道1234567890时设置为true，正式环境下务必设置为false
     openinstall.Config(param);
 ```
 
