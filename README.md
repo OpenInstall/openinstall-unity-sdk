@@ -94,6 +94,8 @@ openinstall可兼容微信openSDK1.8.6以上版本的通用链接跳转功能，
 
 - 如果需要使用自己的拉起 `Activity` ，可参考 `sample/Android/src` 目录中的 `OiUnityActivity.java` 在拉起 `Activity` 的 `onCreate(Bundle savedInstanceState)` 和 `onNewIntent(Intent intent)` 中添加拉起处理代码
 
+- 如果需要使用自定义的 `Application`，请参考 `sample/Android/src` 目录中的 `OiUnityApplication.java` 在自定义 `Application` 的 `onCreate()` 函数中调用预初始化方法 `OpenInstall.preInit(this);`。
+
 ## 使用指南
 
 使用 `OpenInstall` 之前，请先导入命名空间
